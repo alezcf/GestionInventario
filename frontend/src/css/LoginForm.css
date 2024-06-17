@@ -1,0 +1,139 @@
+/* LoginForm.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px; /* Añadido para mejor espaciado en pantallas pequeñas */
+}
+
+.login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
+}
+
+.login-box .avatar {
+    background: url('path-to-your-avatar-image') no-repeat center center;
+    background-size: cover;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+}
+
+.login-box h2 {
+    margin: 0 0 20px;
+    font-weight: 400;
+    color: #333;
+}
+
+.input-container {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.input-container input.is-invalid {
+    border-color: red;
+}
+
+.invalid-feedback {
+    color: red;
+    font-size: 12px;
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+}
+
+.login-button {
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+.forgot-password {
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    color: #ff7e5f;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+  /* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .login-box {
+        padding: 20px;
+    }
+
+    .login-box .avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .login-button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .forgot-password a {
+        font-size: 12px;
+        }
+    }
+
+    @media (max-width: 480px) {
+    .login-box {
+            padding: 15px;
+    }
+
+    .login-box .avatar {
+        width: 60px;
+        height: 60px;
+    }
+
+    .login-box h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .input-container input {
+        padding: 8px;
+    }
+
+    .login-button {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .forgot-password a {
+        font-size: 10px;
+    }
+}
