@@ -1,139 +1,121 @@
 /* LoginForm.css */
-body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
+
 
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 20px; /* Añadido para mejor espaciado en pantallas pequeñas */
-}
-
-.login-box {
-    background: white;
-    padding: 40px;
+    background: #fff;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    max-width: 400px;
-    width: 100%;
-    box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    width: 90%;
+    max-width: 500px; /* Set a maximum width for larger screens */
+    margin: 20px; /* Add some margin for better spacing on small screens */
+    padding: 20px; /* Add some padding for better spacing */
 }
 
-.login-box .avatar {
-    background: url('path-to-your-avatar-image') no-repeat center center;
-    background-size: cover;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin: 0 auto 20px;
-}
-
-.login-box h2 {
-    margin: 0 0 20px;
-    font-weight: 400;
-    color: #333;
+.welcome-text {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #673ab7;
+    text-align: center; /* Center the text within the container */
 }
 
 .input-container {
+    width: 100%; /* Make input container fill the available width */
     margin-bottom: 20px;
-    position: relative;
-}
-
-.input-container input {
-    width: 100%;
+  }
+  
+  .input-container input {
+    width: 100%; /* Make inputs fill the container width */
     padding: 10px;
+    margin: 5px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-.input-container input.is-invalid {
+  }
+  
+  .form-control.is-invalid {
     border-color: red;
-}
-
-.invalid-feedback {
+  }
+  
+  .invalid-feedback {
     color: red;
     font-size: 12px;
-    position: absolute;
-    bottom: -20px;
-    left: 0;
-}
-
-.login-button {
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
-    color: white;
-    border: none;
+  }
+  
+  .options {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .options label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .options input {
+    margin-right: 5px;
+  }
+  
+  .forgot-password {
+    color: #673ab7;
+    text-decoration: none;
+  }
+  
+  .login-button,
+  .signup-button,
+  .recover-button {
+    width: 100%;
     padding: 10px;
+    margin: 10px 0;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%;
     font-size: 16px;
-}
-
-.forgot-password {
-    margin-top: 10px;
-}
-
-.forgot-password a {
-    color: #ff7e5f;
+  }
+  
+  .login-button {
+    background-color: #673ab7; /* Color de fondo para el botón de Login */
+    color: #fff; /* Color del texto */
+  }
+  
+  .signup-button {
+    background-color: #34a853; /* Color de fondo para el botón de Sign Up */
+    color: #fff; /* Color del texto */
+  }
+  
+  .recover-button {
+    background-color: #e4ab00; /* Color de fondo para el botón de Recuperar Contraseña */
+    color: #fff; /* Color del texto */
+  }
+  
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .social-icons a {
+    color: #673ab7;
+    font-size: 24px;
+    margin: 0 10px;
     text-decoration: none;
-    font-size: 14px;
-}
-
-  /* Media queries for responsiveness */
-@media (max-width: 768px) {
-    .login-box {
-        padding: 20px;
+  }
+  
+  .social-icons a:hover {
+    color: #4527a0;
+  }
+  
+  /* Media queries for additional adjustments on smaller screens (optional) */
+  @media (max-width: 768px) {
+    .welcome-text {
+      font-size: 28px; /* Adjust font size for smaller screens */
     }
-
-    .login-box .avatar {
-        width: 80px;
-        height: 80px;
-    }
-
-    .login-button {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    .forgot-password a {
-        font-size: 12px;
-        }
-    }
-
-    @media (max-width: 480px) {
-    .login-box {
-            padding: 15px;
-    }
-
-    .login-box .avatar {
-        width: 60px;
-        height: 60px;
-    }
-
-    .login-box h2 {
-        font-size: 18px;
-        margin-bottom: 15px;
-    }
-
     .input-container input {
-        padding: 8px;
+      font-size: 14px; /* Adjust input font size */
     }
-
-    .login-button {
-        font-size: 12px;
-        padding: 6px;
-    }
-
-    .forgot-password a {
-        font-size: 10px;
-    }
-}
+  }
+  

@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { login } from '../services/auth.service';
 import '../css/LoginForm.css'; // Asegúrate de tener este archivo CSS para los estilos personalizados
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -22,40 +25,39 @@ function LoginForm() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <div className="avatar"></div>
-        <h2>User Login</h2>
+    <div className="login-container d-flex justify-content-center align-items-center">
+      <h2><FontAwesomeIcon icon={faUser} /></h2>
+        <h2 className="welcome-text text-center text-primary mb-4">
+          Iniciar sesión
+        </h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-container">
             <input
               id="email"
               name="email"
               type="email"
-              placeholder="Nombre de Usuario"
+              placeholder="Email address"
               {...register('email', { required: true })}
               className={`form-control ${errors.email ? 'is-invalid' : ''}`}
             />
-            {errors.email && <div className="invalid-feedback">Email is required</div>}
+            {errors.email && <div className="invalid-feedback">El correo electrónico es obligatorio</div>}
           </div>
           <div className="input-container">
             <input
               id="password"
               name="password"
               type="password"
-              placeholder="Contraseña"
+              placeholder="Password"
               {...register('password', { required: true })}
               className={`form-control ${errors.password ? 'is-invalid' : ''}`}
             />
-            {errors.password && <div className="invalid-feedback">Password is required</div>}
+            {errors.password && <div className="invalid-feedback">La contraseña es obligatoria</div>}
           </div>
-          <button type="submit" className="login-button btn btn-primary w-100">Log In</button>
-          <div className="forgot-password text-center mt-3">
-            <a href="/forgot-password" className="text-muted">Forgot Password?</a>
-          </div>
+          <button type="submit" className="login-button">Ingresar</button>
+          <button type="button" className="signup-button" onClick={() => navigate('/signup')}>Registrar</button>
+          <button type="button" className="recover-button" onClick={() => navigate('/recuperate')}>Recuperar contraseña</button>
         </form>
       </div>
-    </div>
   );
 }
 
