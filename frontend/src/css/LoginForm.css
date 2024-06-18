@@ -1,121 +1,142 @@
-/* LoginForm.css */
-
-
 .login-container {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #000000; /* Borde de la caja */
     border-radius: 10px;
     box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
+    flex-direction: row; /* Dirección de los elementos a fila */
+    align-items: center;
+    padding: 20px;
     width: 90%;
-    max-width: 500px; /* Set a maximum width for larger screens */
-    margin: 20px; /* Add some margin for better spacing on small screens */
-    padding: 20px; /* Add some padding for better spacing */
+    max-width: 700px; /* Tamaño máximo */
+    margin: 20px;
+}
+
+.login-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-image {
+    width: 20vw; /* Unidades de viewport width */
+    height: 20vw; /* Unidades de viewport width para mantener proporciones */
+    max-width: 250px; /* Tamaño máximo */
+    max-height: 250px; /* Tamaño máximo */
+    min-width: 200px; /* Tamaño mínimo */
+    min-height: 200px; /* Tamaño mínimo */
+    background: url('../images/InspeccionInventario.png') no-repeat center center;
+    background-size: cover;
+    border-radius: 50%; /* Imagen circular */
+    margin: 0 20px 0 0; /* Margen derecho */
 }
 
 .welcome-text {
-    font-size: 32px;
-    margin-bottom: 20px;
-    color: #673ab7;
-    text-align: center; /* Center the text within the container */
+    font-size: 32px; /* Tamaño de fuente */
+    margin-bottom: 20px; /* Espaciado inferior */
+    color: #673ab7; /* Color de texto */
+    text-align: center; /* Alineación centrada */
+    font-family: 'Arial', sans-serif; /* Fuente moderna */
+    font-weight: 700; /* Texto más grueso */
+    background: linear-gradient(to right, #673ab7, #9c27b0); /* Gradiente de color */
+    -webkit-background-clip: text; /* Recortar el fondo al texto */
+    -webkit-text-fill-color: transparent; /* Llenar el texto con el fondo */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra de texto */
+    letter-spacing: 1px; /* Espaciado entre letras */
+}
+
+.welcome-text:hover {
+    color: #ffffff; /* Color en el hover */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); /* Sombra aumentada en el hover */
+    transform: scale(1.05); /* Agrandado en el hover */
 }
 
 .input-container {
-    width: 100%; /* Make input container fill the available width */
+    width: 100%;
     margin-bottom: 20px;
-  }
-  
-  .input-container input {
-    width: 100%; /* Make inputs fill the container width */
-    padding: 10px;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 15px;
     margin: 5px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-  }
-  
-  .form-control.is-invalid {
+    transition: all 0.3s ease;
+}
+
+.input-container input:focus {
+    border-color: #673ab7;
+    box-shadow: 0px 0px 5px rgba(103, 58, 183, 0.5);
+}
+
+.form-control.is-invalid {
     border-color: red;
-  }
-  
-  .invalid-feedback {
+}
+
+.invalid-feedback {
     color: red;
     font-size: 12px;
-  }
-  
-  .options {
-    display: flex;
-    justify-content: space-between;
+}
+
+.login-button,
+.signup-button,
+.recover-button {
     width: 100%;
-    margin-bottom: 20px;
-  }
-  
-  .options label {
-    display: flex;
-    align-items: center;
-  }
-  
-  .options input {
-    margin-right: 5px;
-  }
-  
-  .forgot-password {
-    color: #673ab7;
-    text-decoration: none;
-  }
-  
-  .login-button,
-  .signup-button,
-  .recover-button {
-    width: 100%;
-    padding: 10px;
+    padding: 15px;
     margin: 10px 0;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-  }
-  
-  .login-button {
-    background-color: #673ab7; /* Color de fondo para el botón de Login */
-    color: #fff; /* Color del texto */
-  }
-  
-  .signup-button {
-    background-color: #34a853; /* Color de fondo para el botón de Sign Up */
-    color: #fff; /* Color del texto */
-  }
-  
-  .recover-button {
-    background-color: #e4ab00; /* Color de fondo para el botón de Recuperar Contraseña */
-    color: #fff; /* Color del texto */
-  }
-  
-  .social-icons {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 20px;
-  }
-  
-  .social-icons a {
-    color: #673ab7;
-    font-size: 24px;
-    margin: 0 10px;
-    text-decoration: none;
-  }
-  
-  .social-icons a:hover {
-    color: #4527a0;
-  }
-  
-  /* Media queries for additional adjustments on smaller screens (optional) */
-  @media (max-width: 768px) {
+    transition: all 0.3s ease;
+}
+
+.login-button {
+    background-color: #5d32a7;
+    color: #fff;
+}
+
+.signup-button {
+    background-color: #278540;
+    color: #fff;
+}
+
+.recover-button {
+    background-color: #cf9c01;
+    color: #fff;
+}
+
+.login-button:hover,
+.signup-button:hover,
+.recover-button:hover {
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column; /* Cambia a columna en pantallas medianas */
+    }
+    .user-image {
+        width: 25vw;
+        height: 25vw;
+        margin: 0 auto 20px; /* Ajustar el margen */
+        order: -1; /* Mueve la imagen al principio */
+    }
     .welcome-text {
-      font-size: 28px; /* Adjust font size for smaller screens */
+        font-size: 28px;
     }
     .input-container input {
-      font-size: 14px; /* Adjust input font size */
+        font-size: 14px;
     }
-  }
-  
+}
+
+@media (max-width: 480px) {
+    .user-image {
+        width: 30vw;
+        height: 30vw;
+        margin: 0 auto 20px; /* Ajustar el margen */
+        order: -1; /* Mueve la imagen al principio */
+    }
+}
