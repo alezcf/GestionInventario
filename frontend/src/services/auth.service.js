@@ -15,9 +15,23 @@ export const login = async ({ email, password }) => {
       axios.defaults.headers.common[
         'Authorization'
       ] = `Bearer ${data.data.accessToken}`;
+      return status;
     }
   } catch (error) {
-    console.log(error);
+    if (error.response) {
+      const { status } = error.response;
+      if (status === 400) {
+        throw new Error('Usuario o contraseña incorrectos');
+      } else if (status === 401) {
+        throw new Error('No autorizado');
+      } else if (status === 500) {
+        throw new Error('Error del servidor');
+      } else {
+        throw new Error('Error desconocido');
+      }
+    } else {
+      throw new Error('Error de red');
+    }
   }
 };
 
