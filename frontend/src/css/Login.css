@@ -1,8 +1,8 @@
-body {
+.login-page {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(to right, rgba(33, 13, 67, 0.5), rgba(54, 21, 112, 0.5)), url('../images/FondoLogin.jpg');
+  background: linear-gradient(to right, #42006b, rgba(68, 18, 154, 0.5)), url('../images/FondoLogin.jpg');
   background-size: cover;
   background-position: center;
   min-height: 100vh;

@@ -1,7 +1,8 @@
 import { Outlet } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { logout } from '../services/auth.service';
-import { AuthProvider, useAuth } from '../context/AuthContext';
+import { AuthProvider } from '../context/AuthContext';
+import Navbar from '../components/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/Root.css'; // Importa los estilos específicos para Root
 
 function Root() {
   return (
@@ -12,23 +13,14 @@ function Root() {
 }
 
 function PageRoot() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/auth');
-  };
-
-  const { user } = useAuth();
-
   return (
-    <div>
-      <div>
-        <h1>Aqui deberia ir un header</h1>
-        <p>Estas logeado como: {user.email}</p>
-        <button onClick={handleLogout}>Cerrar sesion</button>
+    <div><Navbar />
+      <div className="root-container">
+        
+        <div className="content">
+          <Outlet />
+        </div>
       </div>
-      <Outlet />
     </div>
   );
 }

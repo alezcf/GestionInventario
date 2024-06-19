@@ -1,5 +1,5 @@
 .login-container {
-    background: rgba(255, 255, 255, 0.9);
+    background: #30004e;
     border: 1px solid #000000; /* Borde de la caja */
     border-radius: 10px;
     box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
@@ -21,14 +21,13 @@
 
 .user-image {
     width: 20vw; /* Unidades de viewport width */
-    height: 20vw; /* Unidades de viewport width para mantener proporciones */
-    max-width: 250px; /* Tamaño máximo */
-    max-height: 250px; /* Tamaño máximo */
+    height: 30vw; /* Unidades de viewport width para mantener proporciones */
+    max-width: 400px; /* Tamaño máximo */
+    max-height: 400px; /* Tamaño máximo */
     min-width: 200px; /* Tamaño mínimo */
     min-height: 200px; /* Tamaño mínimo */
-    background: url('../images/InspeccionInventario.png') no-repeat center center;
-    background-size: cover;
-    border-radius: 50%; /* Imagen circular */
+    background: url('../images/InspeccionInventario.png') no-repeat center center; /* Ajustado para la imagen redimensionada */
+    background-size: contain; /* Ajuste de tamaño para mantener la imagen completa */
     margin: 0 20px 0 0; /* Margen derecho */
 }
 
@@ -39,7 +38,7 @@
     text-align: center; /* Alineación centrada */
     font-family: 'Arial', sans-serif; /* Fuente moderna */
     font-weight: 700; /* Texto más grueso */
-    background: linear-gradient(to right, #673ab7, #9c27b0); /* Gradiente de color */
+    background: linear-gradient(to right, #d5d4d4, #bdbdbd); /* Gradiente de color */
     -webkit-background-clip: text; /* Recortar el fondo al texto */
     -webkit-text-fill-color: transparent; /* Llenar el texto con el fondo */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra de texto */
@@ -94,17 +93,17 @@
 }
 
 .login-button {
-    background-color: #5d32a7;
+    background-color: #21a99b; /* Turquesa */
     color: #fff;
 }
 
 .signup-button {
-    background-color: #278540;
+    background-color: #cf9c01; /* Dorado */
     color: #fff;
 }
 
 .recover-button {
-    background-color: #cf9c01;
+    background-color: #bc0d8d; /* Damasco */
     color: #fff;
 }
 
@@ -120,7 +119,7 @@
     }
     .user-image {
         width: 25vw;
-        height: 25vw;
+        height: 40vw;
         margin: 0 auto 20px; /* Ajustar el margen */
         order: -1; /* Mueve la imagen al principio */
     }
@@ -134,8 +133,8 @@
 
 @media (max-width: 480px) {
     .user-image {
-        width: 30vw;
-        height: 30vw;
+        width: 60vw;
+        height: 60vw;
         margin: 0 auto 20px; /* Ajustar el margen */
         order: -1; /* Mueve la imagen al principio */
     }
