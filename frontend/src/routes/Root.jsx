@@ -16,8 +16,7 @@ function PageRoot() {
   return (
     <div><Navbar />
       <div className="root-container">
-        
-        <div className="content">
+        <div>
           <Outlet />
         </div>
       </div>

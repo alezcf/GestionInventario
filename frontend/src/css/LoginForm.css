@@ -92,27 +92,6 @@
     transition: all 0.3s ease;
 }
 
-.login-button {
-    background-color: #21a99b; /* Turquesa */
-    color: #fff;
-}
-
-.signup-button {
-    background-color: #cf9c01; /* Dorado */
-    color: #fff;
-}
-
-.recover-button {
-    background-color: #bc0d8d; /* Damasco */
-    color: #fff;
-}
-
-.login-button:hover,
-.signup-button:hover,
-.recover-button:hover {
-    opacity: 0.8;
-}
-
 @media (max-width: 768px) {
     .login-container {
         flex-direction: column; /* Cambia a columna en pantallas medianas */

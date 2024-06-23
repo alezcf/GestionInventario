@@ -1,0 +1,19 @@
+
+.dashboard-container {
+    padding: 10px;
+}
+
+.card-title {
+    font-size: 2vh;
+}
+
+.card-text {
+    font-size: 1rem;
+}
+
+.dashboard-card {
+    min-height: 200px;
+    min-width: 200px;
+    max-width: 100%; /* Tamaño máximo */
+    max-height: 100%; /* Tamaño máximo */
+}

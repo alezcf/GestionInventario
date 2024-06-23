@@ -1,8 +1,10 @@
+import Dashboard from '../components/Dashboard';
+
 function App() {
   return (
-    <>
-      <h1>Pagina principal test bro</h1>
-    </>
+    <div >
+      <Dashboard />
+    </div>
   );
 }
 

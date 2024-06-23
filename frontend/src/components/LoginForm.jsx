@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { login } from '../services/auth.service';
 import '../css/LoginForm.css';
+import '../css/Buttons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function LoginForm() {
