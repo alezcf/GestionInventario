@@ -1,10 +1,15 @@
 "use strict";
-// Import the 'path' module to get the absolute path of the .env file
+// Import the 'path' and 'url' modules to get the absolute path of the .env file
 import path from "node:path";
-const __dirname = import.meta.dirname;
+import { fileURLToPath } from "node:url";
+
+// Obtener el nombre del archivo actual y la ruta del directorio
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /** Get the absolute path of the .env file. */
 const envFilePath = path.resolve(__dirname, ".env");
+
 // Load environment variables from the .env file
 import dotenv from "dotenv";
 dotenv.config({ path: envFilePath });
