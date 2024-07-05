@@ -14,6 +14,7 @@ import authenticationMiddleware from "../middlewares/authentication.middleware.j
 /** Enrutador de manejo para usuario autorizados */
 import productoRoutes from "./producto.routes.js";
 import proveedorRoutes from "./proveedor.routes.js";
+import pedidoRoutes from "./pedido.routes.js";
 
 /** Instancia del enrutador */
 const router = Router();
@@ -22,6 +23,7 @@ const router = Router();
 router.use("/users", authenticationMiddleware, userRoutes);
 router.use("/productos", authenticationMiddleware, productoRoutes);
 router.use("/proveedores", authenticationMiddleware, proveedorRoutes);
+router.use("/pedidos", authenticationMiddleware, pedidoRoutes);
 // Define las rutas para la autenticación /api/auth
 router.use("/auth", authRoutes);
 

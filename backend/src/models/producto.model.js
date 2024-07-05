@@ -40,7 +40,7 @@ const productoSchema = new Schema(
         },
         proveedor: {
             type: Schema.Types.ObjectId,
-            ref: "proveedores",
+            ref: "Proveedor",
             required: true,
         },
         tipo: {
