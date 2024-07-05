@@ -7,34 +7,49 @@ import TIPOS from "../constants/tipos.constants.js";
 // Crea el esquema de la colección 'productos'
 const productoSchema = new Schema(
     {
+        _id: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            auto: true,
+        },
         nombre: {
-        type: String,
-        required: true,
-        },
-        tipo: {
-        type: String,
-        enum: TIPOS,
-        required: true,
-        },
-        categoria: {
-        type: String,
-        enum: CATEGORIAS,
-        required: true,
+            type: String,
+            required: true,
         },
         descripcion: {
-        type: String,
+            type: String,
         },
         precio: {
-        type: Number,
-        required: true,
+            type: Number,
+            required: true,
         },
         stock: {
-        type: Number,
-        required: true,
+            type: Number,
+            required: true,
         },
-        umbral: {
-        type: Number,
-        required: true,
+        categoria: {
+            type: String,
+            enum: CATEGORIAS,
+            required: true,
+        },
+        codigoBarras: {
+            type: String,
+        },
+        imagen: {
+            type: String,
+        },
+        fechaIngreso: {
+            type: Date,
+            default: Date.now,
+        },
+        proveedor: {
+            type: Schema.Types.ObjectId,
+            ref: "proveedores",
+        },
+        tipo: {
+            type: String,
+            enum: TIPOS,
+            required: true,
         },
     },
     {
