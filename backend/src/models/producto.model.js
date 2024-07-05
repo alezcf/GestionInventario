@@ -23,10 +23,6 @@ const productoSchema = new Schema(
             type: Number,
             required: true,
         },
-        stock: {
-            type: Number,
-            required: true,
-        },
         categoria: {
             type: String,
             enum: CATEGORIAS,
