@@ -38,13 +38,10 @@ const productoSchema = new Schema(
         imagen: {
             type: String,
         },
-        fechaIngreso: {
-            type: Date,
-            default: Date.now,
-        },
         proveedor: {
             type: Schema.Types.ObjectId,
             ref: "proveedores",
+            required: true,
         },
         tipo: {
             type: String,
