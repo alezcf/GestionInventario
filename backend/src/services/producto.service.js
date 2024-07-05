@@ -8,7 +8,7 @@ import { handleError } from "../utils/errorHandler.js";
  */
 async function getProductos() {
     try {
-        const productos = await Producto.find().exec();
+        const productos = await Producto.find().populate("proveedor").exec();
         if (!productos) return [null, "No hay productos"];
         return [productos, null];
     } catch (error) {
@@ -40,7 +40,7 @@ async function createProducto(producto) {
  */
 async function getProductoById(id) {
     try {
-        const producto = await Producto.findById(id).exec();
+        const producto = await Producto.findById(id).populate("proveedor").exec();
         if (!producto) return [null, "El producto no existe"];
         return [producto, null];
     } catch (error) {
