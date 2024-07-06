@@ -18,31 +18,41 @@ const productoSchema = new Schema(
         },
         descripcion: {
             type: String,
+            required: false,
+            default: "Sin descripcion",
         },
         precio: {
             type: Number,
-            required: true,
+            required: false,
+            default: 0,
         },
         categoria: {
             type: String,
             enum: CATEGORIAS,
-            required: true,
+            required: false,
+            default: "Otro",
         },
         codigoBarras: {
             type: String,
+            required: false,
+            default: null,
         },
         imagen: {
             type: String,
+            required: false,
+            default: null,
         },
         proveedor: {
             type: Schema.Types.ObjectId,
             ref: "Proveedor",
-            required: true,
+            required: false,
+            default: null,
         },
         tipo: {
             type: String,
             enum: TIPOS,
-            required: true,
+            required: false,
+            default: "Otro",
         },
     },
     {
