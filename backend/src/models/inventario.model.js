@@ -17,6 +17,7 @@ const inventarioSchema = new Schema(
                 ref: "Producto",
                 required: true,
             },
+            
         ],
         stockActual: {
             type: Number,

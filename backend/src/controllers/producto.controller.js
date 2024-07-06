@@ -3,6 +3,7 @@
 import { respondSuccess, respondError } from "../utils/resHandler.js";
 import ProductoService from "../services/producto.service.js";
 import { handleError } from "../utils/errorHandler.js";
+import fs from "fs";
 
 /**
  * Obtiene todos los productos
@@ -33,11 +34,31 @@ async function getProductos(req, res) {
 async function createProducto(req, res) {
     try {
         const { body } = req;
-        const [newProducto, errorProducto] = await ProductoService.createProducto(body);
-        if (errorProducto) return respondError(req, res, 400, errorProducto);
+        const productoData = { ...body };
+
+        // Intenta crear el producto sin la imagen
+        const [newProducto, errorProducto] = await ProductoService.createProducto(productoData);
+        if (errorProducto) {
+            // Si hay un error, eliminar la imagen subida por multer si existe
+            if (req.file && fs.existsSync(req.file.path)) {
+                fs.unlinkSync(req.file.path);
+            }
+            return respondError(req, res, 400, errorProducto);
+        }
+
+        // Si la respuesta es 201 y el producto fue creado exitosamente, verifica si hay una imagen para guardar
+        if (req.file) {
+            // Guarda la ruta de la imagen en el producto
+            newProducto.imagen = req.file.path;
+            await newProducto.save();
+        }
 
         respondSuccess(req, res, 201, newProducto);
     } catch (error) {
+        // En caso de error general, también eliminar la imagen si existe
+        if (req.file && fs.existsSync(req.file.path)) {
+            fs.unlinkSync(req.file.path);
+        }
         handleError(error, "producto.controller -> createProducto");
         respondError(req, res, 500, error.message);
     }
@@ -69,12 +90,39 @@ async function getProductoById(req, res) {
 async function updateProducto(req, res) {
     try {
         const { params, body } = req;
-        // eslint-disable-next-line max-len
-        const [productoUpdated, errorProducto] = await ProductoService.updateProducto(params.id, body);
-        if (errorProducto) return respondError(req, res, 400, errorProducto);
 
+        // Intenta actualizar el producto sin la imagen
+        const [productoUpdated, errorProducto] = await ProductoService.updateProducto(
+            params.id,
+            body,
+        );
+        if (errorProducto) {
+            // Si hay un error, eliminar la imagen subida por multer si existe
+            if (req.file && fs.existsSync(req.file.path)) {
+                fs.unlinkSync(req.file.path);
+            }
+            return respondError(req, res, 400, errorProducto);
+        }
+
+        // Si hay una nueva imagen, manejar la actualización de la imagen
+        if (req.file) {
+            // Elimina la imagen anterior si existe
+            if (productoUpdated.imagen && fs.existsSync(productoUpdated.imagen)) {
+                fs.unlinkSync(productoUpdated.imagen);
+            }
+
+            // Guarda la nueva ruta de la imagen en el producto
+            productoUpdated.imagen = req.file.path;
+            await productoUpdated.save();
+        }
+
+        // Mantiene la imagen inicial si no se sube una nueva
         respondSuccess(req, res, 200, productoUpdated);
     } catch (error) {
+        // En caso de error general, también eliminar la imagen si existe
+        if (req.file && fs.existsSync(req.file.path)) {
+            fs.unlinkSync(req.file.path);
+        }
         handleError(error, "producto.controller -> updateProducto");
         respondError(req, res, 500, error.message);
     }

@@ -30,6 +30,7 @@ async function setupServer() {
     server.use(cookieParser());
     server.use(morgan("dev"));
     server.use("/api", indexRoutes);
+    server.use("/uploads", express.static("src/uploads"));
 
     server.listen(PORT, () => {
       console.log(`=> Servidor corriendo en ${HOST}:${PORT}/api`);
