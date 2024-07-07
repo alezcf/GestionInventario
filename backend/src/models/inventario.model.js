@@ -17,17 +17,12 @@ const inventarioSchema = new Schema(
                 ref: "Producto",
                 required: true,
             },
-            
         ],
         stockActual: {
             type: Number,
             required: true,
             default: 0,
             validate: {
-                /**
-                 * @param {number} value - The value to be validated.
-                 * @returns {boolean} - True if the value is valid, false otherwise.
-                 */
                 validator: function(value) {
                     return value >= 0 && value <= this.maximoStock;
                 },
@@ -38,10 +33,6 @@ const inventarioSchema = new Schema(
             type: Number,
             required: true,
             validate: {
-                /**
-                 * @param {number} value - The value to be validated.
-                 * @returns {boolean} - True if the value is valid, false otherwise.
-                 */
                 validator: function(value) {
                     return value >= this.stockActual;
                 },
