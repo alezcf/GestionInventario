@@ -103,7 +103,7 @@ async function updateProducto(req, res) {
             }
             return respondError(req, res, 400, errorProducto);
         }
-
+    
         // Si hay una nueva imagen, manejar la actualización de la imagen
         if (req.file) {
             // Elimina la imagen anterior si existe
