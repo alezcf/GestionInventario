@@ -3,6 +3,7 @@
 import { Schema, model } from "mongoose";
 import CATEGORIAS from "../constants/categorias.constants.js";
 import TIPOS from "../constants/tipos.constants.js";
+import MEDIDAS from "../constants/medidas.constants.js";
 
 // Crea el esquema de la colección 'productos'
 const productoSchema = new Schema(
@@ -20,6 +21,22 @@ const productoSchema = new Schema(
             type: String,
             required: false,
             default: "Sin descripcion",
+        },
+        marca: {
+            type: String,
+            required: false,
+            default: "Sin marca",
+        },
+        cantidad: {
+            type: Number,
+            required: false,
+            default: 0,
+        },
+        unidadMedida: {
+            type: String,
+            enum: MEDIDAS,
+            required: false,
+            default: "U",
         },
         precio: {
             type: Number,
