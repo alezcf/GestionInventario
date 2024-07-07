@@ -14,9 +14,10 @@ const proveedorSchema = new Schema(
             type: String,
             required: true,
         },
-        rut: {
+        descripcion: {
             type: String,
-            required: true,
+            required: false,
+            default: "No aplica",
         },
         direccion: {
             type: String,
