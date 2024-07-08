@@ -8,8 +8,6 @@ const CATEGORIAS = [
     "Pisco",
     "Ron",
     "Whisky",
-    "Bebida",
-    "Jugo",
     "Agua mineral",
     "Cigarrillo",
     "Snack",
