@@ -1,8 +1,13 @@
 /* eslint-disable no-invalid-this */
-/* eslint-disable require-jsdoc */
+/* eslint-disable max-len */
 "use strict";
 import { model } from "mongoose";
 
+/**
+ * Middleware para actualizar el inventario después de guardar un documento de pedido.
+ * @param {Object} doc - El documento de pedido guardado.
+ * @param {Function} next - La siguiente función de middleware.
+ */
 const updateInventarioAfterSave = async function(doc, next) {
     try {
         const Inventario = model("Inventario");
@@ -10,28 +15,16 @@ const updateInventarioAfterSave = async function(doc, next) {
 
         if (inventario) {
             doc.productos.forEach((producto) => {
-                const existingProduct = inventario.productos.find((p) => {
-                    return p.productoId.toString() === producto.productoId.toString();
-                });
+                const existingProduct = inventario.productos.find((p) => p.productoId.toString() === producto.productoId.toString());
                 if (existingProduct) {
                     existingProduct.cantidad += producto.cantidad;
                 } else {
-                    inventario.productos.push({
-                        productoId: producto.productoId,
-                        cantidad: producto.cantidad,
-                    });
+                    inventario.productos.push({ productoId: producto.productoId, cantidad: producto.cantidad });
                 }
             });
 
-            /**
-             * Calculate the total stock from the products array.
-             * @param {number} total - The accumulated total.
-             * @param {object} producto - The current product object.
-             * @returns {number} - The updated total.
-             */
-            const calculateStock = (total, producto) => total + producto.cantidad;
-            
-            inventario.stockActual = inventario.productos.reduce(calculateStock, 0);
+            inventario.productos = inventario.productos.filter((producto) => producto.cantidad > 0);
+            inventario.stockActual = inventario.productos.reduce((total, producto) => total + producto.cantidad, 0);
             inventario.fechaActualizacion = Date.now();
             await inventario.save();
         }
@@ -41,6 +34,10 @@ const updateInventarioAfterSave = async function(doc, next) {
     }
 };
 
+/**
+ * Middleware para actualizar el inventario antes de actualizar un documento de pedido.
+ * @param {Function} next - La siguiente función de middleware.
+ */
 const updateInventarioBeforeUpdate = async function(next) {
     try {
         const pedido = await this.model.findOne(this.getQuery());
@@ -50,9 +47,7 @@ const updateInventarioBeforeUpdate = async function(next) {
 
             if (inventario) {
                 pedido.productos.forEach((producto) => {
-                    const existingProduct = inventario.productos.find((p) => {
-                        return p.productoId.toString() === producto.productoId.toString();
-                    });
+                    const existingProduct = inventario.productos.find((p) => p.productoId.toString() === producto.productoId.toString());
                     if (existingProduct) {
                         existingProduct.cantidad -= producto.cantidad;
                     }
@@ -63,22 +58,16 @@ const updateInventarioBeforeUpdate = async function(next) {
 
                 if (updatedProducts) {
                     updatedProducts.forEach((producto) => {
-                        const existingProduct = inventario.productos.find((p) => {
-                            return p.productoId.toString() === producto.productoId.toString();
-                        });
+                        const existingProduct = inventario.productos.find((p) => p.productoId.toString() === producto.productoId.toString());
                         if (existingProduct) {
                             existingProduct.cantidad += producto.cantidad;
                         } else {
-                            inventario.productos.push({
-                                productoId: producto.productoId,
-                                cantidad: producto.cantidad,
-                            });
+                            inventario.productos.push({ productoId: producto.productoId, cantidad: producto.cantidad });
                         }
                     });
 
-                    inventario.stockActual = inventario.productos.reduce((total, producto) => {
-                        return total + producto.cantidad;
-                    }, 0);
+                    inventario.productos = inventario.productos.filter((producto) => producto.cantidad > 0);
+                    inventario.stockActual = inventario.productos.reduce((total, producto) => total + producto.cantidad, 0);
                     inventario.fechaActualizacion = Date.now();
                     await inventario.save();
                 }
@@ -90,6 +79,10 @@ const updateInventarioBeforeUpdate = async function(next) {
     }
 };
 
+/**
+ * Middleware para actualizar el inventario antes de eliminar un documento de pedido.
+ * @param {Function} next - La siguiente función de middleware.
+ */
 const updateInventarioBeforeDelete = async function(next) {
     try {
         const pedido = await this.model.findOne(this.getQuery());
@@ -99,23 +92,14 @@ const updateInventarioBeforeDelete = async function(next) {
 
             if (inventario) {
                 pedido.productos.forEach((producto) => {
-                    const existingProduct = inventario.productos.find((p) => {
-                        return p.productoId.toString() === producto.productoId.toString();
-                    });
+                    const existingProduct = inventario.productos.find((p) => p.productoId.toString() === producto.productoId.toString());
                     if (existingProduct) {
                         existingProduct.cantidad -= producto.cantidad;
-                        if (existingProduct.cantidad <= 0) {
-                            inventario.productos = inventario.productos.filter((p) => {
-                                return p.productoId.toString() !== producto.productoId.toString();
-                            });
-                        }
                     }
                 });
 
-                inventario.stockActual = inventario.productos.reduce(
-                    (total, producto) => total + producto.cantidad,
-                    0,
-                );
+                inventario.productos = inventario.productos.filter((producto) => producto.cantidad > 0);
+                inventario.stockActual = inventario.productos.reduce((total, producto) => total + producto.cantidad, 0);
                 inventario.fechaActualizacion = Date.now();
                 await inventario.save();
             }
