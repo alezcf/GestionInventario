@@ -18,5 +18,9 @@ router.use(authenticationMiddleware);
 router.get("/pedidos-por-mes", isAdmin, estadisticasController.getPedidosPorMes);
 router.get("/evolucion-stock", isAdmin, estadisticasController.getEvolucionStock);
 router.get("/stock-por-categoria", isAdmin, estadisticasController.getStockByCategory);
+router.get("/pedidos-por-proveedor", isAdmin, estadisticasController.getPedidosBySupplier);
+router.get("/productos-con-bajo-stock", isAdmin, estadisticasController.getLowStockProducts);
+router.get("/costo-total-inventario", isAdmin, estadisticasController.getTotalInventoryCost);
+
 // Exporta el enrutador
 export default router;

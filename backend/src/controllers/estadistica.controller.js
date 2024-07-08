@@ -68,8 +68,75 @@ async function getStockByCategory(req, res) {
     }
 }
 
+/**
+ * Obtiene el resumen de pedidos por proveedor
+ * @param {Object} req - Objeto de petición
+ * @param {Object} res - Objeto de respuesta
+ */
+async function getPedidosBySupplier(req, res) {
+    try {
+        const [pedidosPorProveedor, errorPedidosPorProveedor] = await EstadisticasService.obtenerPedidosPorProveedor();
+        if (errorPedidosPorProveedor) return respondError(req, res, 404, errorPedidosPorProveedor);
+
+        if (pedidosPorProveedor.length === 0) {
+            respondSuccess(req, res, 204);
+        } else {
+            respondSuccess(req, res, 200, pedidosPorProveedor);
+        }
+    } catch (error) {
+        handleError(error, "estadisticas.controller -> getPedidosBySupplier");
+        respondError(req, res, 400, error.message);
+    }
+}
+
+/**
+ * Obtiene los productos con bajo stock
+ * @param {Object} req - Objeto de petición
+ * @param {Object} res - Objeto de respuesta
+ */
+async function getLowStockProducts(req, res) {
+    const umbral = parseInt(req.query.umbral, 10) || 10;
+    try {
+        const [productosConBajoStock, errorProductosConBajoStock] = await EstadisticasService.obtenerProductosConBajoStock(umbral);
+        if (errorProductosConBajoStock) return respondError(req, res, 404, errorProductosConBajoStock);
+
+        if (productosConBajoStock.length === 0) {
+            respondSuccess(req, res, 204);
+        } else {
+            respondSuccess(req, res, 200, productosConBajoStock);
+        }
+    } catch (error) {
+        handleError(error, "estadisticas.controller -> getLowStockProducts");
+        respondError(req, res, 400, error.message);
+    }
+}
+
+/**
+ * Obtiene el costo total del inventario
+ * @param {Object} req - Objeto de petición
+ * @param {Object} res - Objeto de respuesta
+ */
+async function getTotalInventoryCost(req, res) {
+    try {
+        const [costoTotalInventario, errorCostoTotalInventario] = await EstadisticasService.obtenerCostoTotalInventario();
+        if (errorCostoTotalInventario) return respondError(req, res, 404, errorCostoTotalInventario);
+
+        if (costoTotalInventario.length === 0) {
+            respondSuccess(req, res, 204);
+        } else {
+            respondSuccess(req, res, 200, costoTotalInventario);
+        }
+    } catch (error) {
+        handleError(error, "estadisticas.controller -> getTotalInventoryCost");
+        respondError(req, res, 400, error.message);
+    }
+}
+
 export default {
     getPedidosPorMes,
     getEvolucionStock,
     getStockByCategory,
+    getPedidosBySupplier,
+    getLowStockProducts,
+    getTotalInventoryCost,
 };
