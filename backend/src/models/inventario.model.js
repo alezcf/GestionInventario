@@ -13,9 +13,15 @@ const inventarioSchema = new Schema(
         },
         productos: [
             {
-                type: Schema.Types.ObjectId,
-                ref: "Producto",
-                required: true,
+                productoId: {
+                    type: Schema.Types.ObjectId,
+                    ref: "Producto",
+                    required: false,
+                },
+                cantidad: {
+                    type: Number,
+                    required: false,
+                },
             },
         ],
         stockActual: {
@@ -23,7 +29,7 @@ const inventarioSchema = new Schema(
             required: true,
             default: 0,
             validate: {
-                validator: function(value) {
+                validator: function (value) {
                     return value >= 0 && value <= this.maximoStock;
                 },
                 message: "stockActual debe ser mayor o igual a 0 y menor o igual a maximoStock",
@@ -33,7 +39,7 @@ const inventarioSchema = new Schema(
             type: Number,
             required: true,
             validate: {
-                validator: function(value) {
+                validator: function (value) {
                     return value >= this.stockActual;
                 },
                 message: "maximoStock debe ser mayor o igual a stockActual",
@@ -54,8 +60,22 @@ const inventarioSchema = new Schema(
     },
 );
 
-inventarioSchema.path("productos").validate(function(value) {
-    const uniqueValues = new Set(value.map(v => v.toString()));
+// Middleware para calcular el stockActual antes de guardar o actualizar el documento
+inventarioSchema.pre("save", function (next) {
+    this.stockActual = this.productos.reduce((total, producto) => total + (producto.cantidad || 0), 0);
+    next();
+});
+
+inventarioSchema.pre("findOneAndUpdate", function (next) {
+    const update = this.getUpdate();
+    if (update.productos) {
+        update.stockActual = update.productos.reduce((total, producto) => total + (producto.cantidad || 0), 0);
+    }
+    next();
+});
+
+inventarioSchema.path("productos").validate(function (value) {
+    const uniqueValues = new Set(value.map(v => v.productoId.toString()));
     return uniqueValues.size === value.length;
 }, "Los productos deben ser únicos.");
 

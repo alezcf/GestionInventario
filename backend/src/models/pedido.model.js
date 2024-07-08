@@ -1,4 +1,3 @@
-// /src/models/pedido.model.js
 "use strict";
 import { Schema, model } from "mongoose";
 import {

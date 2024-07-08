@@ -2,7 +2,7 @@
 /* eslint-disable operator-linebreak */
 "use strict";
 import { respondSuccess, respondError } from "../utils/resHandler.js";
-import EstadisticasService from "../services/estadisticas.service.js";
+import EstadisticasService from "../services/estadistica.service.js";
 import { handleError } from "../utils/errorHandler.js";
 
 /**

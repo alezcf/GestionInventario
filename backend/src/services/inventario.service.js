@@ -2,6 +2,7 @@
 "use strict";
 import Inventario from "../models/inventario.model.js";
 import Producto from "../models/producto.model.js";
+import mongoose from "mongoose";
 import { handleError } from "../utils/errorHandler.js";
 
 /**
@@ -10,7 +11,7 @@ import { handleError } from "../utils/errorHandler.js";
  */
 async function getInventarios() {
     try {
-        const inventarios = await Inventario.find().populate("productos").exec();
+        const inventarios = await Inventario.find().populate("productos.productoId").exec();
         if (!inventarios) return [null, "No hay inventarios"];
         return [inventarios, null];
     } catch (error) {
@@ -26,10 +27,12 @@ async function getInventarios() {
  */
 async function createInventario(inventario) {
     try {
-        // Verificar si los productos existen
-        for (const productoId of inventario.productos) {
+        // Verificar si los productos existen y convertir productoId a ObjectId
+        for (const producto of inventario.productos) {
+            const productoId = new mongoose.Types.ObjectId(producto.productoId);
             const productoExists = await Producto.findById(productoId).exec();
-            if (!productoExists) return [null, `Producto con id ${productoId} no existe`];
+            if (!productoExists) return [null, `Producto con id ${producto.productoId} no existe`];
+            producto.productoId = productoId;
         }
 
         const newInventario = new Inventario(inventario);
@@ -48,7 +51,7 @@ async function createInventario(inventario) {
  */
 async function getInventarioById(id) {
     try {
-        const inventario = await Inventario.findById(id).populate("productos").exec();
+        const inventario = await Inventario.findById(id).populate("productos.productoId").exec();
         if (!inventario) return [null, "El inventario no existe"];
         return [inventario, null];
     } catch (error) {
@@ -65,11 +68,13 @@ async function getInventarioById(id) {
  */
 async function updateInventario(id, inventario) {
     try {
-        // Verificar si los productos existen
+        // Verificar si los productos existen y convertir productoId a ObjectId
         if (inventario.productos) {
-            for (const productoId of inventario.productos) {
+            for (const producto of inventario.productos) {
+                const productoId = new mongoose.Types.ObjectId(producto.productoId);
                 const productoExists = await Producto.findById(productoId).exec();
-                if (!productoExists) return [null, `Producto con id ${productoId} no existe`];
+                if (!productoExists) return [null, `Producto con id ${producto.productoId} no existe`];
+                producto.productoId = productoId;
             }
         }
 
