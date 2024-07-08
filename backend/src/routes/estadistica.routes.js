@@ -15,9 +15,8 @@ const router = Router();
 router.use(authenticationMiddleware);
 
 // Define las rutas para las estadísticas
-router.get("/resumen-pedidos", isAdmin, estadisticasController.getResumenPedidos);
 router.get("/pedidos-por-mes", isAdmin, estadisticasController.getPedidosPorMes);
 router.get("/evolucion-stock", isAdmin, estadisticasController.getEvolucionStock);
-
+router.get("/stock-por-categoria", isAdmin, estadisticasController.getStockByCategory);
 // Exporta el enrutador
 export default router;

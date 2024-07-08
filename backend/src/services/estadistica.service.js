@@ -4,40 +4,6 @@ import Inventario from "../models/inventario.model.js";
 import { handleError } from "../utils/errorHandler.js";
 
 /**
- * Obtiene el resumen de pedidos por proveedor
- * @returns {Promise} Promesa con el objeto del resumen de pedidos
- */
-async function obtenerResumenPedidos() {
-    try {
-        const resumen = await Pedido.aggregate([
-            {
-                $group: {
-                    _id: "$proveedor",
-                    totalPedidos: { $sum: 1 },
-                    totalProductos: { $sum: { $size: "$productos" } },
-                },
-            },
-            {
-                $lookup: {
-                    from: "proveedors",
-                    localField: "_id",
-                    foreignField: "_id",
-                    as: "proveedor",
-                },
-            },
-            {
-                $unwind: "$proveedor",
-            },
-        ]);
-        if (!resumen) return [null, "No hay pedidos"];
-        return [resumen, null];
-    } catch (error) {
-        handleError(error, "estadisticas.service -> obtenerResumenPedidos");
-        return [null, error];
-    }
-}
-
-/**
  * Obtiene la cantidad de pedidos por mes
  * @returns {Promise} Promesa con el objeto de pedidos por mes
  */
@@ -50,7 +16,7 @@ async function obtenerPedidosPorMes() {
             {
                 $group: {
                     _id: { $month: "$fechaPedido" },
-                    totalPedidos: { $sum: 1 },
+                    totalPedidos: { $addToSet: "$_id" },
                     totalProductos: { $sum: 1 },
                     totalCantidad: { $sum: "$productos.cantidad" },
                     costo: {
@@ -58,6 +24,15 @@ async function obtenerPedidosPorMes() {
                             $multiply: ["$productos.cantidad", "$productos.precioUnitario"],
                         },
                     },
+                },
+            },
+            {
+                $project: {
+                    _id: 1,
+                    totalPedidos: { $size: "$totalPedidos" },
+                    totalProductos: 1,
+                    totalCantidad: 1,
+                    costo: 1,
                 },
             },
             {
@@ -72,8 +47,9 @@ async function obtenerPedidosPorMes() {
     }
 }
 
+
 /**
- * Obtiene la evolución del stock de productos
+ * Stock total de cada producto en todos los inventarios.
  * @returns {Promise} Promesa con el objeto de la evolución del stock
  */
 async function obtenerEvolucionStock() {
@@ -85,7 +61,7 @@ async function obtenerEvolucionStock() {
             {
                 $group: {
                     _id: "$productos.productoId",
-                    stockTotal: { $sum: "$stockActual" },
+                    stockTotal: { $sum: "$productos.cantidad" },
                 },
             },
         ]);
@@ -97,8 +73,47 @@ async function obtenerEvolucionStock() {
     }
 }
 
+/**
+ * Obtiene el stock de productos por categoría
+ * @returns {Promise} Promesa con el objeto del stock por categoría
+ */
+async function obtenerStockPorCategoria() {
+    try {
+        const stockPorCategoria = await Inventario.aggregate([
+            {
+                $unwind: "$productos",
+            },
+            {
+                $lookup: {
+                    from: "productos",
+                    localField: "productos.productoId",
+                    foreignField: "_id",
+                    as: "producto",
+                },
+            },
+            {
+                $unwind: "$producto",
+            },
+            {
+                $group: {
+                    _id: "$producto.categoria",
+                    totalStock: { $sum: "$productos.cantidad" },
+                },
+            },
+            {
+                $sort: { totalStock: -1 },
+            },
+        ]);
+        if (!stockPorCategoria) return [null, "No hay stock por categoría"];
+        return [stockPorCategoria, null];
+    } catch (error) {
+        handleError(error, "estadisticas.service -> obtenerStockPorCategoria");
+        return [null, error];
+    }
+}
+
 export default {
-    obtenerResumenPedidos,
     obtenerPedidosPorMes,
     obtenerEvolucionStock,
+    obtenerStockPorCategoria,
 };

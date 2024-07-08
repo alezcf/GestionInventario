@@ -6,27 +6,6 @@ import EstadisticasService from "../services/estadistica.service.js";
 import { handleError } from "../utils/errorHandler.js";
 
 /**
- * Obtiene el resumen de pedidos por proveedor
- * @param {Object} req - Objeto de petición
- * @param {Object} res - Objeto de respuesta
- */
-async function getResumenPedidos(req, res) {
-    try {
-        const [resumen, errorResumen] = await EstadisticasService.obtenerResumenPedidos();
-        if (errorResumen) return respondError(req, res, 404, errorResumen);
-
-        if (resumen.length === 0) {
-            respondSuccess(req, res, 204);
-        } else {
-            respondSuccess(req, res, 200, resumen);
-        }
-    } catch (error) {
-        handleError(error, "estadisticas.controller -> getResumenPedidos");
-        respondError(req, res, 400, error.message);
-    }
-}
-
-/**
  * Obtiene la cantidad de pedidos por mes
  * @param {Object} req - Objeto de petición
  * @param {Object} res - Objeto de respuesta
@@ -68,8 +47,29 @@ async function getEvolucionStock(req, res) {
     }
 }
 
+/**
+ * Obtiene el stock de productos por categoría
+ * @param {Object} req - Objeto de petición
+ * @param {Object} res - Objeto de respuesta
+ */
+async function getStockByCategory(req, res) {
+    try {
+        const [stockPorCategoria, errorStockPorCategoria] = await EstadisticasService.obtenerStockPorCategoria();
+        if (errorStockPorCategoria) return respondError(req, res, 404, errorStockPorCategoria);
+
+        if (stockPorCategoria.length === 0) {
+            respondSuccess(req, res, 204);
+        } else {
+            respondSuccess(req, res, 200, stockPorCategoria);
+        }
+    } catch (error) {
+        handleError(error, "estadisticas.controller -> getStockByCategory");
+        respondError(req, res, 400, error.message);
+    }
+}
+
 export default {
-    getResumenPedidos,
     getPedidosPorMes,
     getEvolucionStock,
+    getStockByCategory,
 };
