@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 "use strict";
 import Pedido from "../models/pedido.model.js";
 import Inventario from "../models/inventario.model.js";
@@ -128,7 +129,7 @@ async function obtenerPedidosPorProveedor() {
                                 $map: {
                                     input: "$productos",
                                     as: "producto",
-                                    in: { $multiply: ["$$producto.cantidad", "$$producto.precioUnitario"] }
+                                    in: { $multiply: ["$$producto.cantidad", "$$producto.precioUnitario"] },
                                 },
                             },
                         },
