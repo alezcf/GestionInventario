@@ -31,14 +31,8 @@ const inventarioSchema = new Schema(
         ],
         stockActual: {
             type: Number,
-            required: true,
+            required: false,
             default: 0,
-            validate: {
-                validator: function(value) {
-                    return value >= 0 && value <= this.maximoStock;
-                },
-                message: "stockActual debe ser mayor o igual a 0 y menor o igual a maximoStock",
-            },
         },
         maximoStock: {
             type: Number,

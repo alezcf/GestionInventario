@@ -1,6 +1,8 @@
+"use strict";
 import EmailService from "../services/email.service.js";
 import { respondSuccess, respondError } from "../utils/resHandler.js";
 import { handleError } from "../utils/errorHandler.js";
+import { emailSchema } from "../schema/email.schema.js";
 
 /**
  * Envía un correo electrónico predeterminado
@@ -9,6 +11,9 @@ import { handleError } from "../utils/errorHandler.js";
  */
 async function sendEmail(req, res) {
     try {
+        const { error: bodyError } = emailSchema.validate(req.body);
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
+
         const { to, subject, text, html } = req.body;
         const mailOptions = {
             from: process.env.SMTP_USER,

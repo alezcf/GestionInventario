@@ -1,9 +1,8 @@
-/* eslint-disable max-len */
-/* eslint-disable operator-linebreak */
 "use strict";
 import { respondSuccess, respondError } from "../utils/resHandler.js";
 import InventarioService from "../services/inventario.service.js";
 import { handleError } from "../utils/errorHandler.js";
+import { inventarioBodySchema, inventarioIdSchema } from "../schema/inventario.schema.js";
 
 /**
  * Obtiene todos los inventarios
@@ -34,6 +33,9 @@ async function getInventarios(req, res) {
 async function createInventario(req, res) {
     try {
         const { body } = req;
+        const { error: bodyError } = inventarioBodySchema.validate(body);
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
+
         const [newInventario, errorInventario] = await InventarioService.createInventario(body);
         if (errorInventario) return respondError(req, res, 400, errorInventario);
 
@@ -52,6 +54,9 @@ async function createInventario(req, res) {
 async function getInventarioById(req, res) {
     try {
         const { params } = req;
+        const { error: paramsError } = inventarioIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
+
         const [inventario, errorInventario] = await InventarioService.getInventarioById(params.id);
         if (errorInventario) return respondError(req, res, 404, errorInventario);
 
@@ -70,7 +75,16 @@ async function getInventarioById(req, res) {
 async function updateInventario(req, res) {
     try {
         const { params, body } = req;
-        const [inventarioUpdated, errorInventario] = await InventarioService.updateInventario(params.id, body);
+        const { error: paramsError } = inventarioIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
+
+        const { error: bodyError } = inventarioBodySchema.validate(body);
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
+
+        const [inventarioUpdated, errorInventario] = await InventarioService.updateInventario(
+            params.id,
+            body,
+        );
         if (errorInventario) return respondError(req, res, 400, errorInventario);
 
         respondSuccess(req, res, 200, inventarioUpdated);
@@ -88,7 +102,12 @@ async function updateInventario(req, res) {
 async function deleteInventario(req, res) {
     try {
         const { params } = req;
-        const [inventarioDeleted, errorInventario] = await InventarioService.deleteInventario(params.id);
+        const { error: paramsError } = inventarioIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
+
+        const [inventarioDeleted, errorInventario] = await InventarioService.deleteInventario(
+            params.id,
+        );
         if (errorInventario) return respondError(req, res, 404, errorInventario);
 
         respondSuccess(req, res, 200, inventarioDeleted);

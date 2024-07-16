@@ -1,9 +1,9 @@
-/* eslint-disable operator-linebreak */
 "use strict";
 import { respondSuccess, respondError } from "../utils/resHandler.js";
 import ProductoService from "../services/producto.service.js";
 import { handleError } from "../utils/errorHandler.js";
 import fs from "fs";
+import { productoBodySchema, productoIdSchema } from "../schema/producto.schema.js";
 
 /**
  * Obtiene todos los productos
@@ -34,6 +34,9 @@ async function getProductos(req, res) {
 async function createProducto(req, res) {
     try {
         const { body } = req;
+        const { error: bodyError } = productoBodySchema.validate(body);
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
+
         const productoData = { ...body };
 
         // Intenta crear el producto sin la imagen
@@ -72,6 +75,9 @@ async function createProducto(req, res) {
 async function getProductoById(req, res) {
     try {
         const { params } = req;
+        const { error: paramsError } = productoIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
+
         const [producto, errorProducto] = await ProductoService.getProductoById(params.id);
         if (errorProducto) return respondError(req, res, 404, errorProducto);
 
@@ -90,6 +96,11 @@ async function getProductoById(req, res) {
 async function updateProducto(req, res) {
     try {
         const { params, body } = req;
+        const { error: paramsError } = productoIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
+
+        const { error: bodyError } = productoBodySchema.validate(body);
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
 
         // Intenta actualizar el producto sin la imagen
         const [productoUpdated, errorProducto] = await ProductoService.updateProducto(
@@ -136,6 +147,9 @@ async function updateProducto(req, res) {
 async function deleteProducto(req, res) {
     try {
         const { params } = req;
+        const { error: paramsError } = productoIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
+
         const [productoDeleted, errorProducto] = await ProductoService.deleteProducto(params.id);
         if (errorProducto) return respondError(req, res, 404, errorProducto);
 

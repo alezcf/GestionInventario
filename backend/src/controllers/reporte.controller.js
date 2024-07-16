@@ -2,6 +2,7 @@
 import { respondSuccess, respondError } from "../utils/resHandler.js";
 import ReporteService from "../services/reporte.service.js";
 import { handleError } from "../utils/errorHandler.js";
+import { reporteBodySchema, reporteIdSchema } from "../schema/reporte.schema.js";
 
 /**
  * Obtiene todos los reportes
@@ -31,7 +32,11 @@ async function getReportes(req, res) {
  */
 async function createReporte(req, res) {
     try {
-        const [reporte, errorReporte] = await ReporteService.createReporte(req.body);
+        const { body } = req;
+        const { error: bodyError } = reporteBodySchema.validate(body);
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
+
+        const [reporte, errorReporte] = await ReporteService.createReporte(body);
         if (errorReporte) return respondError(req, res, 400, errorReporte);
 
         respondSuccess(req, res, 201, reporte);
@@ -48,7 +53,11 @@ async function createReporte(req, res) {
  */
 async function getReporteById(req, res) {
     try {
-        const [reporte, errorReporte] = await ReporteService.getReporteById(req.params.id);
+        const { params } = req;
+        const { error: paramsError } = reporteIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
+
+        const [reporte, errorReporte] = await ReporteService.getReporteById(params.id);
         if (errorReporte) return respondError(req, res, 404, errorReporte);
 
         respondSuccess(req, res, 200, reporte);
@@ -65,7 +74,14 @@ async function getReporteById(req, res) {
  */
 async function updateReporte(req, res) {
     try {
-        const [reporte, errorReporte] = await ReporteService.updateReporte(req.params.id, req.body);
+        const { params, body } = req;
+        const { error: paramsError } = reporteIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
+
+        const { error: bodyError } = reporteBodySchema.validate(body);
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
+
+        const [reporte, errorReporte] = await ReporteService.updateReporte(params.id, body);
         if (errorReporte) return respondError(req, res, 404, errorReporte);
 
         respondSuccess(req, res, 200, reporte);
@@ -82,7 +98,11 @@ async function updateReporte(req, res) {
  */
 async function deleteReporte(req, res) {
     try {
-        const [reporte, errorReporte] = await ReporteService.deleteReporte(req.params.id);
+        const { params } = req;
+        const { error: paramsError } = reporteIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
+
+        const [reporte, errorReporte] = await ReporteService.deleteReporte(params.id);
         if (errorReporte) return respondError(req, res, 404, errorReporte);
 
         respondSuccess(req, res, 200, reporte);

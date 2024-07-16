@@ -1,9 +1,8 @@
-/* eslint-disable max-len */
-/* eslint-disable operator-linebreak */
 "use strict";
 import { respondSuccess, respondError } from "../utils/resHandler.js";
 import ProveedorService from "../services/proveedor.service.js";
 import { handleError } from "../utils/errorHandler.js";
+import { proveedorBodySchema, proveedorIdSchema } from "../schema/proveedor.schema.js";
 
 /**
  * Obtiene todos los proveedores
@@ -34,6 +33,9 @@ async function getProveedores(req, res) {
 async function createProveedor(req, res) {
     try {
         const { body } = req;
+        const { error: bodyError } = proveedorBodySchema.validate(body);
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
+
         const [newProveedor, errorProveedor] = await ProveedorService.createProveedor(body);
         if (errorProveedor) return respondError(req, res, 400, errorProveedor);
 
@@ -52,6 +54,9 @@ async function createProveedor(req, res) {
 async function getProveedorById(req, res) {
     try {
         const { params } = req;
+        const { error: paramsError } = proveedorIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
+
         const [proveedor, errorProveedor] = await ProveedorService.getProveedorById(params.id);
         if (errorProveedor) return respondError(req, res, 404, errorProveedor);
 
@@ -70,8 +75,16 @@ async function getProveedorById(req, res) {
 async function updateProveedor(req, res) {
     try {
         const { params, body } = req;
-        // eslint-disable-next-line max-len
-        const [proveedorUpdated, errorProveedor] = await ProveedorService.updateProveedor(params.id, body);
+        const { error: paramsError } = proveedorIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
+
+        const { error: bodyError } = proveedorBodySchema.validate(body);
+        if (bodyError) return respondError(req, res, 400, bodyError.message);
+
+        const [proveedorUpdated, errorProveedor] = await ProveedorService.updateProveedor(
+            params.id,
+            body,
+        );
         if (errorProveedor) return respondError(req, res, 400, errorProveedor);
 
         respondSuccess(req, res, 200, proveedorUpdated);
@@ -89,7 +102,13 @@ async function updateProveedor(req, res) {
 async function deleteProveedor(req, res) {
     try {
         const { params } = req;
-        const [proveedorDeleted, errorProveedor] = await ProveedorService.deleteProveedor(params.id);
+        const { error: paramsError } = proveedorIdSchema.validate(params);
+        if (paramsError) return respondError(req, res, 400, paramsError.message);
+
+        const [
+            proveedorDeleted,
+            errorProveedor,
+        ] = await ProveedorService.deleteProveedor(params.id);
         if (errorProveedor) return respondError(req, res, 404, errorProveedor);
 
         respondSuccess(req, res, 200, proveedorDeleted);
