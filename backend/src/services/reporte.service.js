@@ -10,7 +10,6 @@ async function getReportes() {
     try {
         const reportes = await Reporte
             .find()
-            .populate("rolAsignado")
             .populate("productoAsignado")
             .exec();
         if (!reportes) return [null, "No hay reportes"];
@@ -46,7 +45,6 @@ async function getReporteById(id) {
     try {
         const reporte = await Reporte
         .findById(id)
-        .populate("rolAsignado")
         .populate("productoAsignado")
         .exec();
         if (!reporte) return [null, "El reporte no existe"];

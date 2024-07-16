@@ -29,11 +29,6 @@ const reporteSchema = new Schema(
             required: true,
             default: Date.now,
         },
-        rolAsignado: {
-            type: Schema.Types.ObjectId,
-            ref: "Role",
-            required: true,
-        },
         productoAsignado: {
             type: Schema.Types.ObjectId,
             ref: "Producto",

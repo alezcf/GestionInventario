@@ -24,3 +24,7 @@ export const DB_URL = process.env.DB_URL;
 export const ACCESS_JWT_SECRET = process.env.ACCESS_JWT_SECRET;
 /** Refresh token secret */
 export const REFRESH_JWT_SECRET = process.env.REFRESH_JWT_SECRET;
+export const SMTP_HOST = process.env.SMTP_HOST;
+export const SMTP_PORT = process.env.SMTP_PORT;
+export const SMTP_USER = process.env.SMTP_USER;
+export const SMTP_PASS = process.env.SMTP_PASS;
