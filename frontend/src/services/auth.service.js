@@ -10,35 +10,22 @@ export const login = async ({ email, password }) => {
     });
     const { status, data } = response;
     if (status === 200) {
-      const { email, roles } = await jwtDecode(data.data.accessToken);
-      localStorage.setItem('user', JSON.stringify({ email, roles }));
+      const { id, nombre, apellido, email, roles } = await jwtDecode(data.data.accessToken);
+      localStorage.setItem('user', JSON.stringify({ id, nombre, apellido, email, roles }));
       axios.defaults.headers.common[
         'Authorization'
       ] = `Bearer ${data.data.accessToken}`;
-      return status;
+      cookies.set('jwt-auth', data.data.accessToken, { path: '/' });
     }
   } catch (error) {
-    if (error.response) {
-      const { status } = error.response;
-      if (status === 400) {
-        throw new Error('Usuario o contraseña incorrectos');
-      } else if (status === 401) {
-        throw new Error('No autorizado');
-      } else if (status === 500) {
-        throw new Error('Error del servidor');
-      } else {
-        throw new Error('Error desconocido');
-      }
-    } else {
-      throw new Error('Error de red');
-    }
+    console.log(error);
   }
 };
 
 export const logout = () => {
   localStorage.removeItem('user');
   delete axios.defaults.headers.common['Authorization'];
-  cookies.remove('jwt');
+  cookies.remove('jwt-auth');
 };
 
 export const test = async () => {
