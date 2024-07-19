@@ -1,3 +1,4 @@
+
 .container {
     background-color: #31004F;
     color: #fff;
@@ -127,4 +128,10 @@
 .pagination .page-item.disabled .page-link {
     color: #717070;
     border-color: #bebcbc; /* Borde gris para el elemento deshabilitado */
+}
+
+.producto-imagen {
+    width: 70px;
+    height: 70px;
+    object-fit: cover; /* Mantiene la proporción de la imagen */
 }

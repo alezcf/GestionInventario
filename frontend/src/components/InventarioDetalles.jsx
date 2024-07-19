@@ -36,19 +36,30 @@ const InventarioDetalles = ({ selectedData }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {currentItems.map((producto, index) => (
-                            <tr key={index}>
-                                <td>{producto.productoId.nombre}</td>
-                                <td>{producto.productoId.descripcion}</td>
-                                <td>{producto.productoId.marca}</td>
-                                <td>{`${producto.productoId.cantidad} ${producto.productoId.unidadMedida}`}</td>
-                                <td>{producto.productoId.precio}</td>
-                                <td>{producto.cantidad}</td>
-                                <td>{producto.productoId.categoria}</td>
-                                <td><Image src={producto.productoId.imagen} alt={producto.nombre} fluid /></td>
-                                <td>{producto.productoId.tipo}</td>
-                            </tr>
-                        ))}
+                        {currentItems.map((producto, index) => {
+                            const imageUrl = producto.productoId.imagen.replace('src', '');
+                            
+                            return (
+                                <tr key={index}>
+                                    <td>{producto.productoId.nombre}</td>
+                                    <td>{producto.productoId.descripcion}</td>
+                                    <td>{producto.productoId.marca}</td>
+                                    <td>{`${producto.productoId.cantidad} ${producto.productoId.unidadMedida}`}</td>
+                                    <td>{producto.productoId.precio}</td>
+                                    <td>{producto.cantidad}</td>
+                                    <td>{producto.productoId.categoria}</td>
+                                    <td>
+                                        <Image
+                                            className="producto-imagen"
+                                            src={`http://localhost:3000${imageUrl}`}
+                                            alt={producto.nombre}
+                                            fluid
+                                        />
+                                    </td>
+                                    <td>{producto.productoId.tipo}</td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </Table>
             </div>
