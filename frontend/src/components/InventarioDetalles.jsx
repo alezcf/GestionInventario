@@ -1,12 +1,15 @@
+// src/components/InventarioDetalles.js
 import React from 'react';
 import PropTypes from 'prop-types';
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Table, Image, Pagination, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import '../css/Inventario.css';
 import '../css/Buttons.css';
 
 const InventarioDetalles = ({ selectedData, currentPage, setCurrentPage }) => {
     const itemsPerPage = 5;
+    const navigate = useNavigate();
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -18,92 +21,84 @@ const InventarioDetalles = ({ selectedData, currentPage, setCurrentPage }) => {
         setCurrentPage(pageNumber);
     };
 
-    const handleInfoClick = (producto) => {
-        // Manejar el evento de clic del botón de información
-        console.log('Información del producto:', producto);
-    };
-
-    const handleExportClick = (producto) => {
-        // Manejar el evento de clic del botón de exportar a Excel
-        console.log('Exportar a Excel:', producto);
+    const handleInfoClick = (productoId) => {
+        navigate(`/producto/${productoId}`);
     };
 
     return (
         <>
-            <div className="table-responsive">
-                <Table striped bordered hover responsive="md" className="inventario-table">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Marca</th>
-                            <th>Contenido</th>
-                            <th>Precio</th>
-                            <th>Stock</th>
-                            <th>Categoría</th>
-                            <th>Imagen</th>
-                            <th>Tipo</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {currentItems.map((producto, index) => {
-                            const imageUrl = producto.productoId.imagen.replace('src', '');
-                            
-                            return (
-                                <tr key={index}>
-                                    <td>{producto.productoId.nombre}</td>
-                                    <td>{producto.productoId.descripcion}</td>
-                                    <td>{producto.productoId.marca}</td>
-                                    <td>{`${producto.productoId.cantidad} ${producto.productoId.unidadMedida}`}</td>
-                                    <td>{producto.productoId.precio}</td>
-                                    <td>{producto.cantidad}</td>
-                                    <td>{producto.productoId.categoria}</td>
-                                    <td>
-                                        <Image
-                                            className="producto-imagen"
-                                            src={`http://localhost:3000${imageUrl}`}
-                                            alt={producto.nombre}
-                                            fluid
-                                        />
-                                    </td>
-                                    <td>{producto.productoId.tipo}</td>
-                                    <td>
-                                    <Button
-                                        variant="link"
-                                        onClick={() => handleInfoClick(producto)}
-                                        title="Información"
-                                        className="icon-info"
-                                    >
-                                        <i className="fa-solid fa-info"></i>
-                                    </Button>
-                                    <Button
-                                        variant="link"
-                                        onClick={() => handleExportClick(producto)}
-                                        title="Exportar a Excel"
-                                        className="icon-excel"
-                                    >
-                                        <i className="fa-solid fa-file-excel"></i>
-                                    </Button>
-
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </Table>
-            </div>
-            <Pagination className="pagination">
-                <Pagination.First onClick={() => handlePageChange(1)} disabled={currentPage === 1} />
-                <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} />
-                {[...Array(totalPages).keys()].map((number) => (
-                    <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => handlePageChange(number + 1)}>
-                        {number + 1}
-                    </Pagination.Item>
-                ))}
-                <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages} />
-                <Pagination.Last onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages} />
-            </Pagination>
+        <div className="table-responsive">
+            <Table striped bordered hover responsive="md" className="inventario-table">
+            <thead>
+                <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Marca</th>
+                <th>Contenido</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Categoría</th>
+                <th>Imagen</th>
+                <th>Tipo</th>
+                <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {currentItems.map((producto, index) => {
+                const imageUrl = producto.productoId.imagen.replace('src', '');
+                return (
+                    <tr key={index}>
+                    <td>{producto.productoId.nombre}</td>
+                    <td>{producto.productoId.descripcion}</td>
+                    <td>{producto.productoId.marca}</td>
+                    <td>{`${producto.productoId.cantidad} ${producto.productoId.unidadMedida}`}</td>
+                    <td>{producto.productoId.precio}</td>
+                    <td>{producto.cantidad}</td>
+                    <td>{producto.productoId.categoria}</td>
+                    <td>
+                        <Image
+                        className="producto-imagen"
+                        src={`http://localhost:3000${imageUrl}`}
+                        alt={producto.nombre}
+                        fluid
+                        />
+                    </td>
+                    <td>{producto.productoId.tipo}</td>
+                    <td>
+                        <Button
+                        variant="link"
+                        onClick={() => handleInfoClick(producto.productoId._id)}
+                        title="Información"
+                        className="icon-info"
+                        >
+                        <i className="fa-solid fa-info"></i>
+                        </Button>
+                        <Button
+                        variant="link"
+                        onClick={() => handleExportClick(producto)}
+                        title="Exportar a Excel"
+                        className="icon-excel"
+                        >
+                        <i className="fa-solid fa-file-excel"></i>
+                        </Button>
+                    </td>
+                    </tr>
+                );
+                })}
+            </tbody>
+            </Table>
+        </div>
+        <Pagination className="pagination">
+            <Pagination.First onClick={() => handlePageChange(1)} disabled={currentPage === 1} />
+            <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} />
+            {[...Array(totalPages).keys()].map((number) => (
+            <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => handlePageChange(number + 1)}>
+                {number + 1}
+            </Pagination.Item>
+            ))}
+            <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages} />
+            <Pagination.Last onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages} />
+        </Pagination>
         </>
     );
 };
