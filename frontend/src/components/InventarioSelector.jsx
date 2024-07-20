@@ -1,17 +1,31 @@
-// src/components/InventarioSelector.jsx
 import React from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import '../css/InventarioSelector.css'; // Asegúrate de importar los estilos específicos para el selector
+import '../css/InventarioSelector.css'; 
 
-const InventarioSelector = ({ inventarioData, selectedInventario, handleSelectChange, categorias, selectedCategoria, handleCategoriaChange, searchQuery, handleSearchChange }) => {
+const InventarioSelector = ({ inventarioData, selectedInventario, handleSelectChange, categorias, selectedCategoria, handleCategoriaChange, searchQuery, handleSearchChange, resetPage }) => {
+    const handleInventarioChange = (event) => {
+        handleSelectChange(event);
+        resetPage();
+    };
+
+    const handleCategoriaChangeInternal = (event) => {
+        handleCategoriaChange(event);
+        resetPage();
+    };
+
+    const handleSearchChangeInternal = (event) => {
+        handleSearchChange(event);
+        resetPage();
+    };
+
     return (
         <>
             <Form.Group controlId="inventarioSelect" className="mb-4 selector-group">
                 <Form.Control 
                     as="select" 
                     value={selectedInventario} 
-                    onChange={handleSelectChange} 
+                    onChange={handleInventarioChange} 
                     className="selector-control"
                     style={{ textAlign: 'center' }}
                 >
@@ -29,7 +43,7 @@ const InventarioSelector = ({ inventarioData, selectedInventario, handleSelectCh
                         <Form.Control 
                             as="select" 
                             value={selectedCategoria} 
-                            onChange={handleCategoriaChange} 
+                            onChange={handleCategoriaChangeInternal} 
                             className="selector-control"
                             style={{ textAlign: 'center' }}
                         >
@@ -47,7 +61,7 @@ const InventarioSelector = ({ inventarioData, selectedInventario, handleSelectCh
                         <Form.Control 
                             type="text" 
                             value={searchQuery} 
-                            onChange={handleSearchChange} 
+                            onChange={handleSearchChangeInternal} 
                             placeholder="Buscar..." 
                             className="selector-control"
                         />
@@ -67,6 +81,7 @@ InventarioSelector.propTypes = {
     handleCategoriaChange: PropTypes.func.isRequired,
     searchQuery: PropTypes.string.isRequired,
     handleSearchChange: PropTypes.func.isRequired,
+    resetPage: PropTypes.func.isRequired,
 };
 
 export default InventarioSelector;

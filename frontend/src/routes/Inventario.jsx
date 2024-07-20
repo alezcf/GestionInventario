@@ -7,11 +7,12 @@ import '../css/Inventario.css';
 
 function Inventario() {
     const [inventarioData, setInventarioData] = useState([]);
-    const [selectedInventario, setSelectedInventario] = useState(''); // Inicializa con una cadena vacía
-    const [selectedCategoria, setSelectedCategoria] = useState(''); // Inicializa con una cadena vacía
-    const [categorias, setCategorias] = useState([]); // Para almacenar las categorías disponibles
-    const [searchQuery, setSearchQuery] = useState(''); // Para almacenar la búsqueda
-    const [stockRange, setStockRange] = useState([0, 100]); // Para almacenar el filtro de rango de stock
+    const [selectedInventario, setSelectedInventario] = useState(''); 
+    const [selectedCategoria, setSelectedCategoria] = useState(''); 
+    const [categorias, setCategorias] = useState([]); 
+    const [searchQuery, setSearchQuery] = useState(''); 
+    const [stockRange, setStockRange] = useState([0, 100]); 
+    const [currentPage, setCurrentPage] = useState(1);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -19,40 +20,53 @@ function Inventario() {
             try {
                 const data = await inventarioService.getAllInventarios();
                 setInventarioData(data);
-
+    
                 // Extraer categorías únicas
-                const allCategorias = data.reduce((acc, inventario) => {
-                    inventario.productos.forEach(producto => {
-                        if (!acc.includes(producto.productoId.categoria)) {
-                            acc.push(producto.productoId.categoria);
-                        }
-                    });
-                    return acc;
-                }, []);
+                const allCategorias = extractCategorias(data);
                 setCategorias(allCategorias);
             } catch (error) {
                 setError(error.message);
             }
         };
-
+    
         fetchInventario();
     }, []);
+    
+    const extractCategorias = (data) => {
+        return data.reduce((acc, inventario) => {
+            inventario.productos.forEach(addCategoriaIfUnique.bind(null, acc));
+            return acc;
+        }, []);
+    };
+    
+    const addCategoriaIfUnique = (acc, producto) => {
+        if (!acc.includes(producto.productoId.categoria)) {
+            acc.push(producto.productoId.categoria);
+        }
+    };
 
     const handleSelectChange = (event) => {
         setSelectedInventario(event.target.value);
         setSelectedCategoria(''); // Resetear la categoría cuando se selecciona un nuevo inventario
+        resetPage(); // Resetear la página a 1
     };
 
     const handleCategoriaChange = (event) => {
         setSelectedCategoria(event.target.value);
+        resetPage(); // Resetear la página a 1
     };
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
+        resetPage(); // Resetear la página a 1
     };
 
     const handleStockRangeChange = (value) => {
         setStockRange(value);
+    };
+
+    const resetPage = () => {
+        setCurrentPage(1);
     };
 
     let filteredData = inventarioData.find(inv => inv._id === selectedInventario);
@@ -108,9 +122,10 @@ function Inventario() {
                                     handleSearchChange={handleSearchChange}
                                     stockRange={stockRange}
                                     handleStockRangeChange={handleStockRangeChange}
+                                    resetPage={resetPage} // Pasar la función resetPage
                                 />
                                 {filteredData && (
-                                    <InventarioDetalles selectedData={filteredData} />
+                                    <InventarioDetalles selectedData={filteredData} currentPage={currentPage} setCurrentPage={setCurrentPage} />
                                 )}
                             </>
                         )}

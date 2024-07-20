@@ -1,11 +1,9 @@
-// src/components/InventarioDetalles.jsx
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Image, Pagination } from 'react-bootstrap';
 import '../css/Inventario.css';
 
-const InventarioDetalles = ({ selectedData }) => {
-    const [currentPage, setCurrentPage] = useState(1);
+const InventarioDetalles = ({ selectedData, currentPage, setCurrentPage }) => {
     const itemsPerPage = 5;
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -85,6 +83,8 @@ InventarioDetalles.propTypes = {
         fechaIngreso: PropTypes.string.isRequired,
         fechaActualizacion: PropTypes.string.isRequired,
     }).isRequired,
+    currentPage: PropTypes.number.isRequired,
+    setCurrentPage: PropTypes.func.isRequired,
 };
 
 export default InventarioDetalles;
