@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Image, Pagination } from 'react-bootstrap';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import { Table, Image, Pagination, Button } from 'react-bootstrap';
 import '../css/Inventario.css';
+import '../css/Buttons.css';
 
 const InventarioDetalles = ({ selectedData, currentPage, setCurrentPage }) => {
     const itemsPerPage = 5;
@@ -14,6 +16,16 @@ const InventarioDetalles = ({ selectedData, currentPage, setCurrentPage }) => {
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
+    };
+
+    const handleInfoClick = (producto) => {
+        // Manejar el evento de clic del botón de información
+        console.log('Información del producto:', producto);
+    };
+
+    const handleExportClick = (producto) => {
+        // Manejar el evento de clic del botón de exportar a Excel
+        console.log('Exportar a Excel:', producto);
     };
 
     return (
@@ -31,6 +43,7 @@ const InventarioDetalles = ({ selectedData, currentPage, setCurrentPage }) => {
                             <th>Categoría</th>
                             <th>Imagen</th>
                             <th>Tipo</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,6 +68,25 @@ const InventarioDetalles = ({ selectedData, currentPage, setCurrentPage }) => {
                                         />
                                     </td>
                                     <td>{producto.productoId.tipo}</td>
+                                    <td>
+                                    <Button
+                                        variant="link"
+                                        onClick={() => handleInfoClick(producto)}
+                                        title="Información"
+                                        className="icon-info"
+                                    >
+                                        <i className="fa-solid fa-info"></i>
+                                    </Button>
+                                    <Button
+                                        variant="link"
+                                        onClick={() => handleExportClick(producto)}
+                                        title="Exportar a Excel"
+                                        className="icon-excel"
+                                    >
+                                        <i className="fa-solid fa-file-excel"></i>
+                                    </Button>
+
+                                    </td>
                                 </tr>
                             );
                         })}
