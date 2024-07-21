@@ -16,6 +16,10 @@ const inventarioSchema = new Schema(
             required: true,
             auto: true,
         },
+        nombre: {
+            type: String,
+            required: true,
+        },
         productos: [
             {
                 productoId: {

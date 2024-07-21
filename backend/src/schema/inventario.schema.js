@@ -7,6 +7,10 @@ import Joi from "joi";
  * @constant {Object}
  */
 const inventarioBodySchema = Joi.object({
+    nombre: Joi.string().required().messages({
+        "string.empty": "El nombre no puede estar vacío.",
+        "any.required": "El nombre es obligatorio.",
+    }),
     productos: Joi.array().items(
         Joi.object({
         productoId: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).messages({
