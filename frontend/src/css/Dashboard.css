@@ -1,11 +1,4 @@
 
-body {
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #e6e6fa 100%, #e6e6fa 100%); /* Gradiente sutil */
-    color: #333;
-    margin: 0;
-    padding: 0;
-}
 
 .dashboard-title {
     font-size: 3rem;
