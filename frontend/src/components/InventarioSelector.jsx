@@ -32,7 +32,7 @@ const InventarioSelector = ({ inventarioData, selectedInventario, handleSelectCh
                     <option value="" style={{ textAlign: 'center' }}>Selecciona un Inventario</option>
                     {inventarioData.map((inventario) => (
                         <option key={inventario._id} value={inventario._id} className="selector-option">
-                            {inventario._id}
+                            {inventario.nombre}
                         </option>
                     ))}
                 </Form.Control>
