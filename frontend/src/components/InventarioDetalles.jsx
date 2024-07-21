@@ -1,4 +1,3 @@
-// src/components/InventarioDetalles.js
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Image, Pagination, Button } from 'react-bootstrap';
@@ -6,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import '../css/Inventario.css';
 import '../css/Buttons.css';
+
+const BASE_URL = import.meta.env.VITE_BASE_URL.replace('/api', '');
 
 const InventarioDetalles = ({ selectedData, currentPage, setCurrentPage }) => {
     const itemsPerPage = 5;
@@ -58,7 +59,7 @@ const InventarioDetalles = ({ selectedData, currentPage, setCurrentPage }) => {
                     <td>
                         <Image
                         className="producto-imagen"
-                        src={`http://localhost:3000${imageUrl}`}
+                        src={`${BASE_URL}${imageUrl}`}
                         alt={producto.nombre}
                         fluid
                         />
