@@ -1,4 +1,4 @@
 /** Tipos permitidos para cada producto. */
-const TIPOS = ["Alcoholico", "Sin Alcohol", "Otro"];
+const TIPOS = ["Alcohólico", "Sin Alcohol", "Otro"];
 
 export default TIPOS;
