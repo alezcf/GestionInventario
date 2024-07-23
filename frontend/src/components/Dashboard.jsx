@@ -26,7 +26,7 @@ function Dashboard() {
                             <Card.Text className="flex-grow-1">
                                 Alertas de reabastecimiento y solicitudes de nuevos registros.
                             </Card.Text>
-                            <Link to="/alertas" className="signup-button mt-auto">Ver más</Link>
+                            <Link to="/reporte" className="signup-button mt-auto">Ver más</Link>
                         </Card.Body>
                     </Card>
                 </Col>

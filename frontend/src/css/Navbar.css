@@ -47,12 +47,14 @@
 
 .custom-button {
   background-color: #21a99b; /* Turquesa para el botón */
-  color: #000000; /* Negro para el texto del botón */
-  border: none;
+  color: #000000; /* Blanco para el texto del botón */
+  border: 1.5px solid #000000; /* Borde negro */
   padding: 10px 20px;
   border-radius: 20px;
-  font-size: 1em;
+  font-size: 1.1em;
   transition: background-color 0.3s ease, transform 0.3s ease;
+  text-decoration: none; /* Quitar subrayado */
+  display: inline-block; /* Hacerlo inline-block para comportarse como enlace */
 }
 
 .custom-button:hover {

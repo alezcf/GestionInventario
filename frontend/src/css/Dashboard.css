@@ -1,5 +1,3 @@
-
-
 .dashboard-title {
     font-size: 3rem;
     font-weight: bold;
@@ -34,7 +32,7 @@
 
 .dashboard-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
 }
 
 .signup-button {
@@ -46,6 +44,8 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    text-decoration: none; /* Quitar subrayado */
+    display: inline-block; /* Para comportarse como enlace */
 }
 
 .signup-button:hover {

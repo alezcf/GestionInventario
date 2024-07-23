@@ -1,27 +1,22 @@
 .login-button {
     background-color: #21a99b; /* Turquesa */
     color: #fff;
-    max-width: 100%; /* Tamaño máximo */
-    max-height: 100%; /* Tamaño máximo */
+    text-decoration: none; /* Quitar subrayado */
 }
 
 .signup-button {
     background-color: #cf9c01; /* Dorado */
     color: #fff;
-    max-width: 400px; /* Tamaño máximo */
-    max-height: 400px; /* Tamaño máximo */
 }
 
 .recover-button {
     background-color: #bc0d8d; /* Damasco */
     color: #fff;
-    max-width: 400px; /* Tamaño máximo */
-    max-height: 400px; /* Tamaño máximo */
 }
 
 .login-button:hover,
 .signup-button:hover,
-.recover-button:hover {
+.recover-button:hover{
     opacity: 0.8;
 }
 

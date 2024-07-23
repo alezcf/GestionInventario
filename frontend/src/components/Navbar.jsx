@@ -33,7 +33,7 @@ function Navbar() {
           <Nav className="ml-auto nav-links">
             <Nav.Link href="/" className="nav-link">Inicio</Nav.Link>
             <Nav.Link href="/user-management" className="nav-link">Gestión de Usuarios</Nav.Link>
-            <Nav.Link href="/inventory-management" className="nav-link">Gestión de Inventario</Nav.Link>
+            <Nav.Link href="/inventario" className="nav-link">Gestión de Inventario</Nav.Link>
             <Nav.Link href="/reports" className="nav-link">Reportes</Nav.Link>
             <div className="user-info">
               <Button variant="outline-light" className="custom-button" onClick={handleLogout}>Cerrar sesión</Button>
