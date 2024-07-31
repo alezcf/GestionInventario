@@ -6,7 +6,7 @@ import '../css/ProductoDetalles.css';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL.replace('/api', '');
 
-const ProductoDetalles = () => {
+const Producto = () => {
     const { id } = useParams();
     const [producto, setProducto] = useState(null);
     const [error, setError] = useState(null);
@@ -103,4 +103,4 @@ const ProductoDetalles = () => {
     );
 };
 
-export default ProductoDetalles;
+export default Producto;

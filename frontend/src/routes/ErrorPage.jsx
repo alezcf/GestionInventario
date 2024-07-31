@@ -1,24 +1,40 @@
 import { useRouteError } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form'; 
+import '../css/ErrorPage.css'; 
+import '../css/Buttons.css';
 
 const ErrorPage = () => {
   const error = useRouteError();
+  const navigate = useNavigate();
+  const { handleSubmit } = useForm();
 
-  /**
-   * Este mensaje de error, está pensado para los desarrolladores.
-   * En un entorno de producción, no se debería mostrar este mensaje o almenos
-   * no de esta forma.
-   */
-  console.error({
-    status: error.status,
-    statusText: error.statusText,
-    message: error.message ? error.message : 'No message',
-  });
+  const onSubmit = (data) => {
+    login(data)
+      .then(() => {
+        navigate('/');
+      })
+      .catch(error => {
+        setDataError('Usuario o contraseña incorrectos');
+      });
+  };
 
   return (
-    <div>
-      <h1>Oops!</h1>
-      <p>Sorry, un error inesperado a ocurrido.</p>
-    </div>
+    <Container fluid className="error-page d-flex align-items-center justify-content-center">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Row className="text-center w-100">
+          <Col>
+            <h1>Error</h1>
+            <p>La dirección ingresada no existe.</p>
+            <p>
+              <i>{error.statusText || error.message}</i>
+            </p>
+            <button type="button" className="login-button" onClick={() => navigate('/')}>Página principal</button>
+          </Col>
+        </Row>
+      </form>
+    </Container>
   );
 };
 
