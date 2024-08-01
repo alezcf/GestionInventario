@@ -1,31 +1,20 @@
-// src/components/ReportesScreen.js
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import reportesService from '../services/reporte.service';
-import '../css/Buttons.css';
+import { fetchAllReportes, eliminarReporte } from '../logic/reporte.logic';
 import { formatDate, formatTime } from '../logic/format.logic';
+import '../css/Buttons.css';
 
 const Reporte = () => {
     const [reportes, setReportes] = useState([]);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchReportes = async () => {
-            try {
-                const data = await reportesService.getAllReportes();
-                console.log("Data recibida por reportes = ", data);
-                setReportes(data);
-            } catch (error) {
-                setError(error.message);
-            }
-        };
-        fetchReportes();
+        fetchAllReportes(setReportes, setError);
     }, []);
 
     const handleEliminarNotificacion = (reporteId) => {
-        // Lógica para eliminar la notificación
-        console.log(`Eliminar notificación con ID: ${reporteId}`);
+        eliminarReporte(reporteId, setReportes, setError, reportes);
     };
 
     if (error) {
