@@ -156,14 +156,8 @@ async function deleteProducto(req, res) {
         const [productoDeleted, errorDelete] = await ProductoService.deleteProducto(params.id);
         if (errorDelete) return respondError(req, res, 404, errorDelete);
 
-        // Eliminar la imagen del sistema de archivos
         if (producto.imagen) {
-            try {
-                await fs.unlink(producto.imagen);
-            } catch (unlinkError) {
-                console.error(`Error al eliminar la imagen: ${unlinkError}`);
-                // No devolver error aquí porque el producto ya ha sido eliminado de la base de datos
-            }
+            await fs.unlink(producto.imagen);
         }
 
         respondSuccess(req, res, 200, productoDeleted);
