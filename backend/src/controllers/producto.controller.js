@@ -2,7 +2,7 @@
 import { respondSuccess, respondError } from "../utils/resHandler.js";
 import ProductoService from "../services/producto.service.js";
 import { handleError } from "../utils/errorHandler.js";
-import fs from "fs";
+import { promises as fs } from "fs";
 import { productoBodySchema, productoIdSchema } from "../schema/producto.schema.js";
 
 /**
@@ -150,8 +150,21 @@ async function deleteProducto(req, res) {
         const { error: paramsError } = productoIdSchema.validate(params);
         if (paramsError) return respondError(req, res, 400, paramsError.message);
 
-        const [productoDeleted, errorProducto] = await ProductoService.deleteProducto(params.id);
+        const [producto, errorProducto] = await ProductoService.getProductoById(params.id);
         if (errorProducto) return respondError(req, res, 404, errorProducto);
+
+        const [productoDeleted, errorDelete] = await ProductoService.deleteProducto(params.id);
+        if (errorDelete) return respondError(req, res, 404, errorDelete);
+
+        // Eliminar la imagen del sistema de archivos
+        if (producto.imagen) {
+            try {
+                await fs.unlink(producto.imagen);
+            } catch (unlinkError) {
+                console.error(`Error al eliminar la imagen: ${unlinkError}`);
+                // No devolver error aquí porque el producto ya ha sido eliminado de la base de datos
+            }
+        }
 
         respondSuccess(req, res, 200, productoDeleted);
     } catch (error) {
