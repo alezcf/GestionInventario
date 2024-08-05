@@ -1,16 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../services/auth.service';
-import { useAuth } from '../context/AuthContext';
 import { Navbar as BootstrapNavbar, Nav, Button, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../css/Navbar.css'; // Importa los estilos específicos para Navbar
-
+import '../css/Navbar.css';
 import BotilleriaLogo from '../images/BotilleriaLogo.png';
 
 function Navbar() {
   const navigate = useNavigate();
-  const { user } = useAuth();
 
   const handleLogout = () => {
     logout();
