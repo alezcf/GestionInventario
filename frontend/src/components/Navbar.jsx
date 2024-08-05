@@ -6,7 +6,6 @@ import { Navbar as BootstrapNavbar, Nav, Button, Container } from 'react-bootstr
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/Navbar.css'; // Importa los estilos específicos para Navbar
 
-// Importa la imagen del logo
 import BotilleriaLogo from '../images/BotilleriaLogo.png';
 
 function Navbar() {
@@ -34,7 +33,7 @@ function Navbar() {
             <Nav.Link href="/" className="nav-link">Inicio</Nav.Link>
             <Nav.Link href="/user-management" className="nav-link">Gestión de Usuarios</Nav.Link>
             <Nav.Link href="/inventario" className="nav-link">Gestión de Inventario</Nav.Link>
-            <Nav.Link href="/reports" className="nav-link">Reportes</Nav.Link>
+            <Nav.Link href="/reporte" className="nav-link">Reportes</Nav.Link>
             <div className="user-info">
               <Button variant="outline-light" className="custom-button" onClick={handleLogout}>Cerrar sesión</Button>
             </div>
