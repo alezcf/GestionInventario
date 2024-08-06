@@ -8,10 +8,6 @@ export const useAuth = () => useContext(AuthContext);
 
 // eslint-disable-next-line react/prop-types
 export function AuthProvider({ children }) {
-  // Add the 'children' prop to the props validation
-  AuthProvider.propTypes = {
-    children: PropTypes.node.isRequired,
-  };
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem('user')) || '';
@@ -24,8 +20,7 @@ export function AuthProvider({ children }) {
   }, [isAuthenticated, navigate]);
 
   return (
-    const contextValue = useMemo(() => ({ isAuthenticated, user }), [isAuthenticated, user]);
-    <AuthContext.Provider value={contextValue}>
+    <AuthContext.Provider value={{ isAuthenticated, user }}>
       {children}
     </AuthContext.Provider>
   );
