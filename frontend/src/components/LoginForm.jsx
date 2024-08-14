@@ -11,15 +11,16 @@ function LoginForm() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [loginError, setLoginError] = useState('');
 
-  const onSubmit = (data) => {
-    login(data)
-      .then(() => {
-        navigate('/');
-      })
-      .catch(error => {
-        console.error("Login failed", error);
-        setLoginError('Usuario o contraseña incorrectos'); // Mensaje de error personalizado
-      });
+  const onSubmit = async (data) => {
+    const result = await login(data);
+    
+    if (result.status === 200) {
+      navigate('/');
+    } else if (result.status === 400) {
+      setLoginError(result.message); // Muestra el mensaje de error personalizado
+    } else {
+      setLoginError('Error al intentar iniciar sesión.'); // Manejo de errores generales
+    }
   };
 
   return (

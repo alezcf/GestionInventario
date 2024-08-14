@@ -9,6 +9,7 @@ export const login = async ({ email, password }) => {
       password,
     });
     const { status, data } = response;
+
     if (status === 200) {
       const { id, nombre, apellido, email, roles } = await jwtDecode(data.data.accessToken);
       localStorage.setItem('user', JSON.stringify({ id, nombre, apellido, email, roles }));
@@ -16,9 +17,16 @@ export const login = async ({ email, password }) => {
         'Authorization'
       ] = `Bearer ${data.data.accessToken}`;
       cookies.set('jwt-auth', data.data.accessToken, { path: '/' });
+      return { status, data }; // Retorna el status y los datos en caso de éxito
     }
   } catch (error) {
-    console.log(error);
+    if (error.response && error.response.status === 400) {
+      // Retorna un objeto que indique que el email o la contraseña son incorrectos
+      return { status: 400, message: 'Usuario o contraseña incorrectos' };
+    } else {
+      console.log(error.response.status);
+      return { status: error.response.status, message: 'Error inesperado' };
+    }
   }
 };
 
