@@ -71,6 +71,7 @@ const InventarioDetalles = ({ selectedData, currentPage, setCurrentPage }) => {
                         onClick={() => handleInfoClick(producto.productoId._id)}
                         title="Información"
                         className="icon-info"
+                        style={{ padding: '0' }}
                         >
                         <i className="fa-solid fa-info"></i>
                         </Button>
@@ -79,6 +80,7 @@ const InventarioDetalles = ({ selectedData, currentPage, setCurrentPage }) => {
                         onClick={() => handleExportClick(producto)}
                         title="Exportar a Excel"
                         className="icon-excel"
+                        style={{ padding: '0' }}
                         >
                         <i className="fa-solid fa-file-excel"></i>
                         </Button>

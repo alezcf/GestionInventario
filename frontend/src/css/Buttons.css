@@ -24,7 +24,7 @@
     background-color: blue;
     color: white; /* Color del texto */
     border: none;
-    padding: 5px;
+    padding: 0px;
     border-radius: 5px;
 }
 
@@ -50,3 +50,19 @@
     border-radius: 5px;
 }
 
+.icon-update {
+    background-color: rgb(3, 5, 3);
+    color: rgb(0, 0, 0); /* Color del texto */
+    border: none;
+    padding: 0px;
+    border-radius: 5px;
+    margin-right: 10px;
+    outline: none; /* Eliminar borde de enfoque por defecto */
+}
+
+.icon-update i {
+    background-color: rgb(0, 0, 0); /* Fondo del icono */
+    color: white; /* Color del icono */
+    padding: 10px;
+    border-radius: 5px;
+}

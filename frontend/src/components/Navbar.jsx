@@ -28,7 +28,7 @@ function Navbar() {
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto nav-links">
             <Nav.Link href="/" className="nav-link">Inicio</Nav.Link>
-            <Nav.Link href="/user-management" className="nav-link">Gestión de Usuarios</Nav.Link>
+            <Nav.Link href="/usuario" className="nav-link">Gestión de Usuarios</Nav.Link>
             <Nav.Link href="/inventario" className="nav-link">Gestión de Inventario</Nav.Link>
             <Nav.Link href="/reporte" className="nav-link">Reportes</Nav.Link>
             <div className="user-info">

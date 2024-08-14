@@ -17,3 +17,18 @@ export function formatTime(dateString) {
     
     return `${hours}:${minutes} ${ampm}`;
 }
+
+export function formatRut(rut) {
+    // Elimina cualquier punto o guion existente
+    const cleanRut = rut.replace(/[^\dkK]/g, '');
+    
+    // Separa el cuerpo del RUT del dígito verificador
+    const body = cleanRut.slice(0, -1);
+    const dv = cleanRut.slice(-1).toUpperCase();
+
+    // Formatea el cuerpo del RUT con puntos
+    const formattedBody = body.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+    // Retorna el RUT formateado con guion antes del dígito verificador
+    return `${formattedBody}-${dv}`;
+}
